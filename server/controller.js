@@ -1,7 +1,7 @@
-const houses = require('./server/db.json')
+const houses = require('./db.json')
 
-// let id = houses.length + 1
-let id = 4
+let id = houses.length + 1
+// let id = 4
 
 module.exports = {
     getHouses: (req, res) => {
@@ -21,16 +21,11 @@ module.exports = {
         //   },
 
         const { address, price, imageURL } = req.body
-        // const newHouse = {
-        //     id: id,
-        //     address: address,
-        //     price: price,
-        //     imageURL: imageURL
-        // }
+
         const newHouse = {
             id: id,
             address,
-            price,
+            price: +price,  // force the price to be a number
             imageURL
         }
         houses.push(newHouse)
@@ -39,8 +34,6 @@ module.exports = {
     },
     updateHouse: (req, res) => {
         const index = houses.findIndex(elem => elem.id === +req.params.id)
-        const type = req.body.type
-        // const { type } = req.body
 
         switch (req.body.type) {
             case 'plus':
